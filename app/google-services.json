@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "928834904793",
+    "firebase_url": "https://homeworks-e269c.firebaseio.com",
+    "project_id": "homeworks-e269c",
+    "storage_bucket": "homeworks-e269c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:928834904793:android:402c95ae639e8ff6",
+        "android_client_info": {
+          "package_name": "com.digio.homeworks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "928834904793-10k2kl6hqinlr78hojlhsjbt7i0gc1vc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.digio.homeworks",
+            "certificate_hash": "69187A48654A300B7B15FDC6A340C5E51132C1A9"
+          }
+        },
+        {
+          "client_id": "928834904793-9d6tbp6t6mroahstt5d1soo34o03sje6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfU0ZOTaFG4uTpvHeCalzD5mNNQJnolXg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "928834904793-9d6tbp6t6mroahstt5d1soo34o03sje6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
