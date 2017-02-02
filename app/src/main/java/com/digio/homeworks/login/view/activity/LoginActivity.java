@@ -1,4 +1,4 @@
-package com.digio.homeworks.activity;
+package com.digio.homeworks.login.view.activity;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
