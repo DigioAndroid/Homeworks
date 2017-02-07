@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Homeworks</string>
-    <string name="login">Login with G+</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Login strings -->
+    <string name="login_title">Welcome</string>
+    <string name="login">Login with G+</string>
+    <string name="oauth_id">928834904793-9d6tbp6t6mroahstt5d1soo34o03sje6.apps.googleusercontent.com</string>
 </resources>
