@@ -3,16 +3,20 @@ package com.digio.homeworks.login.view.presenter;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.digio.homeworks.R;
 import com.digio.homeworks.login.view.activity.LoginActivity;
+import com.digio.homeworks.main.view.activity.MainActivity;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -26,7 +30,7 @@ import static com.google.android.gms.internal.zzs.TAG;
 public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListener{
 
     // Variables
-    LoginActivity loginActivity;
+    private LoginActivity loginActivity;
 
     private static final int RC_SIGN_IN = 100;
 
@@ -70,6 +74,11 @@ public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListene
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+
+                    // Launch MainActivity
+                    Intent intent = new Intent(loginActivity, MainActivity.class);
+                    loginActivity.startActivity(intent);
+
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -119,8 +128,13 @@ public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListene
     /**
      * Begin sign-in when login button is clicked
      */
-    public void onLoginClick(){
-        signIn();
+    public void onClick(View v){
+        switch(v.getId()) {
+            case R.id.btnLogin:
+                signIn();
+                break;
+            default:
+        }
     }
 
     /**
@@ -129,6 +143,19 @@ public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListene
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         loginActivity.startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    /**
+     * Logout Google Sign-In API
+     */
+    private void signOut() {
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                        //TODO: Implement
+                    }
+                });
     }
 
     /**

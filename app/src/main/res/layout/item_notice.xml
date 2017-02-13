@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lyNoticeItem"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:descendantFocusability="blocksDescendants"
+    android:clickable="true" >
+
+    <TextView
+        android:id="@+id/noticeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/NoticeTitleStyle"/>
+
+    <ImageView
+        android:id="@+id/teacherIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/noticeTitle"/>
+
+    <TextView
+        android:id="@+id/teacherName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/noticeTitle"
+        android:layout_toRightOf="@id/teacherIcon"/>
+
+    <TextView
+        android:id="@+id/teacherLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/teacherName"
+        android:layout_toRightOf="@id/teacherIcon"/>
+
+    <ImageView
+        android:id="@+id/rateImage"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/noticeTitle"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:id="@+id/rateScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/noticeTitle"
+        android:layout_toLeftOf="@id/rateImage"/>
+
+</RelativeLayout>

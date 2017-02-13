@@ -34,7 +34,7 @@ import butterknife.OnClick;
 public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.btnLogin) Button btnLogin;
-    LoginPresenter loginPresenter;
+    private LoginPresenter loginPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.btnLogin)
     public void onClick(View v) {
-        getLoginPresenter().onLoginClick();
+        getLoginPresenter().onClick(v);
     }
 
     /**

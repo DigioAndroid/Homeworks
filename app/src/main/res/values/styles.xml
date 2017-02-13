@@ -22,4 +22,10 @@
         <item name="android:textColor">@color/whiteColor</item>
     </style>
 
+    <!-- Main Board Styles -->
+    <style name="NoticeTitleStyle" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/whiteColor</item>
+        <item name="android:background">@color/noticeTitleBackground</item>
+    </style>
+
 </resources>
