@@ -3,11 +3,11 @@ package com.digio.homeworks.login.view.presenter;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
-import com.digio.homeworks.R;
 import com.digio.homeworks.login.view.activity.LoginActivity;
+import com.digio.homeworks.login.view.constant.ConfigurationParams;
+import com.digio.homeworks.login.view.interfaces.LoginView;
 import com.digio.homeworks.main.view.activity.MainActivity;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -30,7 +30,7 @@ import static com.google.android.gms.internal.zzs.TAG;
 public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListener{
 
     // Variables
-    private LoginActivity loginActivity;
+    private LoginView loginView;
 
     private static final int RC_SIGN_IN = 100;
 
@@ -40,10 +40,10 @@ public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListene
 
     /**
      * Constructor
-     * @param loginActivity
+     * @param loginView
      */
-    public LoginPresenter(LoginActivity loginActivity) {
-        this.loginActivity = loginActivity;
+    public LoginPresenter(LoginActivity loginView) {
+        this.loginView = loginView;
         initialize();
     }
 
@@ -54,14 +54,14 @@ public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListene
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(loginActivity.getString(R.string.oauth_id))
+                .requestIdToken(ConfigurationParams.OAUTH_ID)
                 .requestEmail()
                 .build();
 
         // Build a GoogleApiClient with access to the Google Sign-In API and the
         // options specified by gso.
-        mGoogleApiClient = new GoogleApiClient.Builder(loginActivity)
-                .enableAutoManage(loginActivity, this)
+        mGoogleApiClient = new GoogleApiClient.Builder((LoginActivity)loginView)
+                .enableAutoManage((LoginActivity)loginView, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
@@ -74,10 +74,6 @@ public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListene
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-
-                    // Launch MainActivity
-                    Intent intent = new Intent(loginActivity, MainActivity.class);
-                    loginActivity.startActivity(intent);
 
                 } else {
                     // User is signed out
@@ -126,23 +122,11 @@ public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListene
     }
 
     /**
-     * Begin sign-in when login button is clicked
-     */
-    public void onClick(View v){
-        switch(v.getId()) {
-            case R.id.btnLogin:
-                signIn();
-                break;
-            default:
-        }
-    }
-
-    /**
      * Access Google Sign-In API
      */
-    private void signIn() {
+    public void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        loginActivity.startActivityForResult(signInIntent, RC_SIGN_IN);
+        ((LoginActivity)loginView).startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     /**
@@ -167,7 +151,7 @@ public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListene
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(loginActivity, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener((LoginActivity)loginView, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
@@ -177,7 +161,7 @@ public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListene
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithCredential", task.getException());
-                            Toast.makeText(loginActivity, "Authentication failed.",
+                            Toast.makeText((LoginActivity)loginView, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }

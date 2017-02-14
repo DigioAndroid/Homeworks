@@ -4,7 +4,6 @@
     <!-- Login strings -->
     <string name="login_title">Welcome</string>
     <string name="login">Login with G+</string>
-    <string name="oauth_id">928834904793-9d6tbp6t6mroahstt5d1soo34o03sje6.apps.googleusercontent.com</string>
 
     <!-- Main strings -->
     <string name="main_title">Homeworks</string>

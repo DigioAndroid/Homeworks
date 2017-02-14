@@ -2,17 +2,11 @@ package com.digio.homeworks.main.view.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.LayerDrawable;
-import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,8 +14,6 @@ import com.digio.homeworks.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.OnLongClick;
 
 public class LessonsListAdapter extends RecyclerViewCursorAdapter<LessonsListAdapter.ViewHolder> {
 

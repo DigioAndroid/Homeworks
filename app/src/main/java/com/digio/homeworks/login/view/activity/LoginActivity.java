@@ -12,7 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.digio.homeworks.R;
+import com.digio.homeworks.login.view.interfaces.LoginView;
 import com.digio.homeworks.login.view.presenter.LoginPresenter;
+import com.digio.homeworks.main.view.activity.MainActivity;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -31,10 +33,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements LoginView {
 
     @BindView(R.id.btnLogin) Button btnLogin;
     private LoginPresenter loginPresenter;
+    @BindView(R.id.loginToolbar) Toolbar toolbar;
+    @BindView(R.id.toolbarTitle) TextView loginTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +49,6 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         // Show toolbar with login welcome title
-        Toolbar toolbar = (Toolbar)findViewById(R.id.loginToolbar);
-        TextView loginTitle = (TextView)toolbar.findViewById(R.id.toolbarTitle);
         loginTitle.setText(getString(R.string.login_title));
         setSupportActionBar(toolbar);
     }
@@ -69,9 +71,18 @@ public class LoginActivity extends AppCompatActivity {
         getLoginPresenter().onActivityResult(requestCode, resultCode, data);
     }
 
+    /**
+     * Launch MainActivity
+     */
+    @Override
+    public void showMain() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
     @OnClick(R.id.btnLogin)
     public void onClick(View v) {
-        getLoginPresenter().onClick(v);
+        getLoginPresenter().signIn();
     }
 
     /**
@@ -79,7 +90,9 @@ public class LoginActivity extends AppCompatActivity {
      * @return
      */
     public LoginPresenter getLoginPresenter() {
-        if (loginPresenter == null) loginPresenter = new LoginPresenter(this);
+        if(loginPresenter == null) {
+            loginPresenter = new LoginPresenter(this);
+        }
         return loginPresenter;
     }
 

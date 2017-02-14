@@ -6,18 +6,19 @@ import android.support.v4.app.FragmentTransaction;
 import com.digio.homeworks.R;
 import com.digio.homeworks.main.view.activity.MainActivity;
 import com.digio.homeworks.main.view.fragment.LessonsListFragment;
+import com.digio.homeworks.main.view.interfaces.MainView;
 
 public class MainPresenter {
 
-    private MainActivity mainActivity;
+    private MainView mainView;
 
-    public MainPresenter(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
+    public MainPresenter(MainView mainView) {
+        this.mainView = mainView;
     }
 
     public void showList() {
         // Get fragment manager
-        FragmentManager manager = mainActivity.getSupportFragmentManager();
+        FragmentManager manager = ((MainActivity)mainView).getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
 
         // Create LessonsList fragment
