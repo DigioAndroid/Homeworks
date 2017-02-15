@@ -1,5 +1,6 @@
 package com.digio.homeworks.login.view.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -69,6 +70,11 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         getLoginPresenter().onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
     }
 
     /**

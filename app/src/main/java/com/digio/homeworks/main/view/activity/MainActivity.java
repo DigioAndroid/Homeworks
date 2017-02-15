@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
         mainTitle.setText(getString(R.string.main_title));
         setSupportActionBar(toolbar);
 
-        DBUtils.test();
+        //DBUtils.test();
 
         // Create fragment and add it to container
         getMainPresenter().showList();

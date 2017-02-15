@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <corners android:radius="@dimen/item_radius" />
+
+    <padding
+        android:bottom="@dimen/item_content_padding_size"
+        android:left="@dimen/item_content_padding_size"
+        android:right="@dimen/item_content_padding_size"
+        android:top="@dimen/item_content_padding_size" />
+
+    <stroke
+        android:width="1dp"
+        android:color="@color/noticeBorderColor" />
+
+</shape>

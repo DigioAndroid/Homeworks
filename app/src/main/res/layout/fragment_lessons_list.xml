@@ -3,5 +3,6 @@
     android:id="@+id/lessonsList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/list_padding_size"
     android:scrollbarAlwaysDrawVerticalTrack="true"
     android:drawSelectorOnTop="true" />

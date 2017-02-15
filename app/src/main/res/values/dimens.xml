@@ -5,4 +5,15 @@
 
     <!-- Toolbar dimens -->
     <dimen name="toolbar_title_size">18sp</dimen>
+
+    <!-- Main dimens -->
+    <dimen name="list_padding_size">5dp</dimen>
+    <dimen name="separation_between_notices">10dp</dimen>
+    <dimen name="item_content_padding_size">6dp</dimen>
+    <dimen name="item_radius">10dp</dimen>
+    <dimen name="teacher_name_size">16sp</dimen>
+    <dimen name="teacher_name_margin_top">3dp</dimen>
+    <dimen name="rate_score_margin_right">3dp</dimen>
+    <dimen name="title_margin_bottom">5dp</dimen>
+
 </resources>

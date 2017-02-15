@@ -42,7 +42,7 @@ public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListene
      * Constructor
      * @param loginView
      */
-    public LoginPresenter(LoginActivity loginView) {
+    public LoginPresenter(LoginView loginView) {
         this.loginView = loginView;
         initialize();
     }
@@ -60,7 +60,7 @@ public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListene
 
         // Build a GoogleApiClient with access to the Google Sign-In API and the
         // options specified by gso.
-        mGoogleApiClient = new GoogleApiClient.Builder((LoginActivity)loginView)
+        mGoogleApiClient = new GoogleApiClient.Builder(loginView.getContext())
                 .enableAutoManage((LoginActivity)loginView, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
@@ -74,6 +74,7 @@ public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListene
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    loginView.showMain();
 
                 } else {
                     // User is signed out
@@ -161,7 +162,7 @@ public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListene
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithCredential", task.getException());
-                            Toast.makeText((LoginActivity)loginView, "Authentication failed.",
+                            Toast.makeText(loginView.getContext(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }

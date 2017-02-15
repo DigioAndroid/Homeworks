@@ -22,10 +22,24 @@
         <item name="android:textColor">@color/whiteColor</item>
     </style>
 
+    <!-- Custom Notice Item background and effects -->
+    <style name="NoticeItemStyle">
+        <item name="android:background">@drawable/recyclerview_ripple</item>
+    </style>
+
     <!-- Main Board Styles -->
+
+    <!-- Notice Title Style -->
     <style name="NoticeTitleStyle" parent="android:Widget.TextView">
         <item name="android:textColor">@color/whiteColor</item>
-        <item name="android:background">@color/noticeTitleBackground</item>
+        <item name="android:background">@drawable/notice_title_textview</item>
+        <item name="android:layout_marginBottom">@dimen/teacher_name_margin_top</item>
+    </style>
+
+    <!-- Teacher Name Style -->
+    <style name="TeacherNameStyle" parent="android:Widget.TextView">
+        <item name="android:textSize">@dimen/teacher_name_size</item>
+        <item name="android:layout_marginTop">@dimen/teacher_name_margin_top</item>
     </style>
 
 </resources>

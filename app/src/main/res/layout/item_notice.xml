@@ -2,14 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/lyNoticeItem"
     android:layout_width="match_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants"
-    android:clickable="true" >
+    android:clickable="true"
+    android:layout_marginBottom="@dimen/separation_between_notices"
+    style="@style/NoticeItemStyle">
 
     <TextView
         android:id="@+id/noticeTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/title_margin_bottom"
         style="@style/NoticeTitleStyle"/>
 
     <ImageView
@@ -23,7 +26,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/noticeTitle"
-        android:layout_toRightOf="@id/teacherIcon"/>
+        android:layout_toRightOf="@id/teacherIcon"
+        style="@style/TeacherNameStyle"/>
 
     <TextView
         android:id="@+id/teacherLocation"
@@ -37,13 +41,28 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_below="@id/noticeTitle"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/star"/>
 
     <TextView
         android:id="@+id/rateScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/teacher_name_margin_top"
+        android:layout_marginRight="@dimen/rate_score_margin_right"
         android:layout_below="@id/noticeTitle"
         android:layout_toLeftOf="@id/rateImage"/>
+
+    <TextView
+        android:id="@+id/pricePerHour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/teacherIcon" />
+
+    <TextView
+        android:id="@+id/distanceToLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pricePerHour" />
 
 </RelativeLayout>

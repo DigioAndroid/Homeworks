@@ -6,4 +6,5 @@
 
     <color name="whiteColor">#FFFF</color>
     <color name="noticeTitleBackground">#303F9F</color>
+    <color name="noticeBorderColor">#303F9F</color>
 </resources>
