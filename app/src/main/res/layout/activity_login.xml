@@ -16,4 +16,12 @@
         android:layout_centerInParent="true"
         android:text="@string/login" />
 
+    <Button
+        android:id="@+id/btnAnonymousLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/btnLogin"
+        android:text="@string/anonymous_login" />
+
 </RelativeLayout>

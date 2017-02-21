@@ -27,6 +27,18 @@
         <item name="android:background">@drawable/recyclerview_ripple</item>
     </style>
 
+    <!-- NavigationDrawer Styles -->
+
+    <!-- Header User Style -->
+    <style name="HeaderUserStyle" parent="@style/TextAppearance.AppCompat.Large.Inverse">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <!-- Header Email Style -->
+    <style name="HeaderEmailStyle" parent="@style/TextAppearance.AppCompat.Large.Inverse">
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <!-- Main Board Styles -->
 
     <!-- Notice Title Style -->

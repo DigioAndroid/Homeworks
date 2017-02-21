@@ -3,6 +3,8 @@ package com.digio.homeworks.login.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -81,14 +83,26 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
      * Launch MainActivity
      */
     @Override
-    public void showMain() {
+    public void showMain(@Nullable FirebaseUser fbUser) {
         Intent intent = new Intent(this, MainActivity.class);
+        if(fbUser != null) {
+            Bundle bundle = new Bundle();
+            bundle.putString("ACCOUNT_USER", fbUser.getDisplayName());
+            bundle.putString("ACCOUNT_EMAIL", fbUser.getEmail());
+            intent.putExtras(bundle);
+        }
         startActivity(intent);
     }
 
-    @OnClick(R.id.btnLogin)
+    @OnClick({R.id.btnLogin, R.id.btnAnonymousLogin})
     public void onClick(View v) {
-        getLoginPresenter().signIn();
+        switch(v.getId()) {
+            case R.id.btnLogin:
+                getLoginPresenter().signIn();
+                break;
+            default:
+                showMain(null);
+        }
     }
 
     /**

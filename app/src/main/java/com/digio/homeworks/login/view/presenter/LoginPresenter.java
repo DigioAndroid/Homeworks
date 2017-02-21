@@ -74,7 +74,7 @@ public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListene
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    loginView.showMain();
+                    loginView.showMain(user);
 
                 } else {
                     // User is signed out

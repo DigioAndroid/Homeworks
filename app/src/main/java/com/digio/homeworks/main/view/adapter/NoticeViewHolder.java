@@ -44,8 +44,8 @@ public class NoticeViewHolder extends RecyclerView.ViewHolder {
         name.setText(notice.getTeacherName());
         location.setText(notice.getTeacherLocation());
         rate.setText(notice.getTeacherCurrentRate() + " / " + notice.getTeacherTotalRates());
-        pricePerHour.setText("Price per hour: " + notice.getPricePerHour() + "€/hour");
-        distanceInKm.setText("Distance: " + notice.getDistanceInKm() + " Km");
+        pricePerHour.setText("Precio por hora: " + notice.getPricePerHour() + "€/hora");
+        distanceInKm.setText("Distancia: " + notice.getDistanceInKm() + " Km");
     }
 
 }

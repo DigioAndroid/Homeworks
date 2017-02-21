@@ -3,7 +3,20 @@
 
     <!-- Login strings -->
     <string name="login_title">Welcome</string>
-    <string name="login">Login with G+</string>
+    <string name="login">Acceder con G+</string>
+    <string name="anonymous_login">Anónimo</string>
+
+    <!-- NavigationDrawer strings -->
+    <string name="navview_anonymous_user">Anónimo</string>
+    <string name="navview_anonymous_email">-</string>
+    <string name="navview_profile_title">Perfil</string>
+    <string name="navview_my_lessons_title">Mis Clases</string>
+    <string name="navview_settings_title">Preferencias</string>
+    <string name="navview_singin_title">Acceder con G+</string>
+    <string name="navview_signout_title">Cerrar sesión</string>
+    <string name="navview_search_title">Buscar</string>
+    <string name="navview_my_students_title">Mis Estudiantes</string>
+    <string name="navview_messages_title">Buzón</string>
 
     <!-- Main strings -->
     <string name="main_title">Homeworks</string>

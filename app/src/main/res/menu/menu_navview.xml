@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_profile_opt"
+        android:icon="@mipmap/ic_launcher"
+        android:title="@string/navview_profile_title"/>
+    <item
+        android:id="@+id/nav_my_lessons_opt"
+        android:icon="@mipmap/ic_launcher"
+        android:title="@string/navview_my_lessons_title"/>
+    <item
+        android:id="@+id/nav_settings_opt"
+        android:icon="@mipmap/ic_launcher"
+        android:title="@string/navview_settings_title"/>
+    <item
+        android:id="@+id/nav_sign_in_opt"
+        android:icon="@mipmap/ic_launcher"
+        android:title="@string/navview_singin_title"/>
+    <item
+        android:id="@+id/nav_sign_out_opt"
+        android:icon="@mipmap/ic_launcher"
+        android:title="@string/navview_signout_title"/>
+    <item
+        android:id="@+id/nav_search_opt"
+        android:icon="@mipmap/ic_launcher"
+        android:title="@string/navview_search_title"/>
+    <item
+        android:id="@+id/nav_my_students_opt"
+        android:icon="@mipmap/ic_launcher"
+        android:title="@string/navview_my_students_title"/>
+    <item
+        android:id="@+id/nav_messages_opt"
+        android:icon="@mipmap/ic_launcher"
+        android:title="@string/navview_messages_title"/>
+</menu>

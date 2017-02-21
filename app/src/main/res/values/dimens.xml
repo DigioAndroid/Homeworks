@@ -6,6 +6,10 @@
     <!-- Toolbar dimens -->
     <dimen name="toolbar_title_size">18sp</dimen>
 
+    <!-- NavigationDrawer dimens -->
+    <dimen name="header_height">180dp</dimen>
+    <dimen name="username_separation_size">10dp</dimen>
+
     <!-- Main dimens -->
     <dimen name="list_padding_size">5dp</dimen>
     <dimen name="separation_between_notices">10dp</dimen>
