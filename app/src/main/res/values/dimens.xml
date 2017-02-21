@@ -9,6 +9,8 @@
     <!-- NavigationDrawer dimens -->
     <dimen name="header_height">180dp</dimen>
     <dimen name="username_separation_size">10dp</dimen>
+    <dimen name="username_size">20sp</dimen>
+    <dimen name="email_size">16sp</dimen>
 
     <!-- Main dimens -->
     <dimen name="list_padding_size">5dp</dimen>

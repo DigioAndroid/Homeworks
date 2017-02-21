@@ -31,12 +31,12 @@
 
     <!-- Header User Style -->
     <style name="HeaderUserStyle" parent="@style/TextAppearance.AppCompat.Large.Inverse">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">@dimen/username_size</item>
     </style>
 
     <!-- Header Email Style -->
     <style name="HeaderEmailStyle" parent="@style/TextAppearance.AppCompat.Large.Inverse">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/email_size</item>
     </style>
 
     <!-- Main Board Styles -->

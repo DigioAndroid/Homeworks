@@ -19,6 +19,7 @@
     <item
         android:id="@+id/nav_sign_out_opt"
         android:icon="@mipmap/ic_launcher"
+        android:visible="false"
         android:title="@string/navview_signout_title"/>
     <item
         android:id="@+id/nav_search_opt"
