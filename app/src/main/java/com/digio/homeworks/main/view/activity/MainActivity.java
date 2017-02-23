@@ -1,25 +1,22 @@
 package com.digio.homeworks.main.view.activity;
 
-import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.digio.homeworks.R;
-import com.digio.homeworks.login.view.interfaces.LoginView;
 import com.digio.homeworks.login.view.presenter.LoginPresenter;
 import com.digio.homeworks.main.view.interfaces.MainView;
 import com.digio.homeworks.main.view.presenter.MainPresenter;
-import com.google.firebase.auth.FirebaseUser;
+import com.digio.homeworks.profile.view.activity.ProfileActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,30 +50,56 @@ public class MainActivity extends AppCompatActivity implements MainView, Navigat
         // Set Navigation listener
         navView.setNavigationItemSelectedListener(this);
 
-        // Set NavigationDrawer username and email if needed
+        // Configure NavigationDrawer options
         Bundle bundle = getIntent().getExtras();
         if(bundle != null) {
-            // Get header view
-            View headerView = navView.getHeaderView(0);
-
-            // Get header textviews
-            TextView userName = ButterKnife.findById(headerView, R.id.navHeaderUser);
-            TextView email = ButterKnife.findById(headerView, R.id.navHeaderEmail);
-
-            // Set account information
-            userName.setText(bundle.getString("ACCOUNT_USER"));
-            email.setText(bundle.getString("ACCOUNT_EMAIL"));
-
-            // Show Sign-out button and hide Sign-in button
-            MenuItem btnSignOut = navView.getMenu().findItem(R.id.nav_sign_out_opt);
-            btnSignOut.setVisible(true);
-            MenuItem btnSignIn = navView.getMenu().findItem(R.id.nav_sign_in_opt);
-            btnSignIn.setVisible(false);
+            userSignIn(bundle);
+        }
+        else {
+            anonymousSignIn();
         }
 
         // Enable hamburger menu
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         drawerToggle.syncState();
+    }
+
+    /**
+     * Configure NavigationDrawer for signed-in user
+     * @param bundle
+     */
+    private void userSignIn(Bundle bundle) {
+        // Get header view
+        View headerView = navView.getHeaderView(0);
+
+        // Get header textviews
+        TextView userName = ButterKnife.findById(headerView, R.id.navHeaderUser);
+        TextView email = ButterKnife.findById(headerView, R.id.navHeaderEmail);
+
+        // Set account information
+        userName.setText(bundle.getString("ACCOUNT_USER"));
+        email.setText(bundle.getString("ACCOUNT_EMAIL"));
+
+        // Show Sign-out button and hide Sign-in button
+        MenuItem btnSignOut = navView.getMenu().findItem(R.id.nav_sign_out_opt);
+        btnSignOut.setVisible(true);
+        MenuItem btnSignIn = navView.getMenu().findItem(R.id.nav_sign_in_opt);
+        btnSignIn.setVisible(false);
+    }
+
+    /**
+     * Configure NavigationDrawer for anonymous user
+     */
+    private void anonymousSignIn() {
+        // Disable profile, my lessons, my students and messages buttons
+        MenuItem btnProfile = navView.getMenu().findItem(R.id.nav_profile_opt);
+        btnProfile.setEnabled(false);
+        MenuItem btnLessons = navView.getMenu().findItem(R.id.nav_my_lessons_opt);
+        btnLessons.setEnabled(false);
+        MenuItem btnStudents = navView.getMenu().findItem(R.id.nav_my_students_opt);
+        btnStudents.setEnabled(false);
+        MenuItem btnMessages = navView.getMenu().findItem(R.id.nav_messages_opt);
+        btnMessages.setEnabled(false);
     }
 
     /**
@@ -130,6 +153,10 @@ public class MainActivity extends AppCompatActivity implements MainView, Navigat
      */
     private void showProfile() {
         // TODO: Implement
+        Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+        String email_extra = getIntent().getExtras().getString("ACCOUNT_EMAIL");
+        intent.putExtra("EMAIL", email_extra);
+        startActivity(intent);
     }
 
     /**
