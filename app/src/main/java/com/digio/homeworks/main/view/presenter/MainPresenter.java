@@ -38,6 +38,9 @@ public class MainPresenter implements Presenter {
 
     }
 
+    /**
+     * Manage account information stored in shared preferences
+     */
     public void handleAccountInfo() {
         // Store user and email in shared preferences
         SharedPreferences pref = mainView.getSharedPreferences();

@@ -60,6 +60,9 @@ public class MainActivity extends ParentActivity implements MainPresenter.View, 
         drawerToggle.syncState();
     }
 
+    /**
+     * Show LessonsListFragment
+     */
     private void showList() {
         // Get fragment manager
         FragmentManager manager = getSupportFragmentManager();
