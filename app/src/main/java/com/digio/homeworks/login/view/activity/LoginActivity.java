@@ -18,6 +18,8 @@ import com.digio.homeworks.R;
 import com.digio.homeworks.login.view.interfaces.LoginView;
 import com.digio.homeworks.login.view.presenter.LoginPresenter;
 import com.digio.homeworks.main.view.activity.MainActivity;
+import com.digio.homeworks.main.view.activity.ParentActivity;
+import com.digio.homeworks.main.view.interfaces.Presenter;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -36,7 +38,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LoginActivity extends AppCompatActivity implements LoginView {
+public class LoginActivity extends ParentActivity implements LoginView {
 
     @BindView(R.id.btnLogin) Button btnLogin;
     private LoginPresenter loginPresenter;
@@ -56,22 +58,17 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         setSupportActionBar(toolbar);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        getLoginPresenter().onActivityStart();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        getLoginPresenter().onActivityStop();
+    @NonNull @Override public LoginPresenter getPresenter() {
+        if(loginPresenter == null) {
+            loginPresenter = new LoginPresenter(this);
+        }
+        return loginPresenter;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        getLoginPresenter().onActivityResult(requestCode, resultCode, data);
+        getPresenter().onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -98,22 +95,10 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.btnLogin:
-                getLoginPresenter().signIn();
+                getPresenter().signIn();
                 break;
             default:
                 showMain(null);
         }
     }
-
-    /**
-     * Get LoginPresenter instance creating it if needed
-     * @return
-     */
-    public LoginPresenter getLoginPresenter() {
-        if(loginPresenter == null) {
-            loginPresenter = new LoginPresenter(this);
-        }
-        return loginPresenter;
-    }
-
 }

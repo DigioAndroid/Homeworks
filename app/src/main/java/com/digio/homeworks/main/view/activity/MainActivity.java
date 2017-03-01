@@ -15,15 +15,15 @@ import android.widget.TextView;
 import com.digio.homeworks.R;
 import com.digio.homeworks.login.view.presenter.LoginPresenter;
 import com.digio.homeworks.main.view.interfaces.MainView;
+import com.digio.homeworks.main.view.interfaces.Presenter;
 import com.digio.homeworks.main.view.presenter.MainPresenter;
 import com.digio.homeworks.profile.view.activity.ProfileActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements MainView, NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends ParentActivity implements MainView, NavigationView.OnNavigationItemSelectedListener{
 
-    private LoginPresenter loginPresenter;
     private MainPresenter mainPresenter;
     @BindView(R.id.drawerLayout) DrawerLayout drawerLayout;
     @BindView(R.id.mainToolbar) Toolbar toolbar;
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements MainView, Navigat
         //DBUtils.test();
 
         // Create fragment and add it to container
-        getMainPresenter().showList();
+        getPresenter().showList();
 
         // Set Navigation listener
         navView.setNavigationItemSelectedListener(this);
@@ -62,6 +62,13 @@ public class MainActivity extends AppCompatActivity implements MainView, Navigat
         // Enable hamburger menu
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         drawerToggle.syncState();
+    }
+
+    @NonNull @Override public MainPresenter getPresenter() {
+        if(mainPresenter == null) {
+            mainPresenter = new MainPresenter(this);
+        }
+        return mainPresenter;
     }
 
     /**
@@ -138,17 +145,6 @@ public class MainActivity extends AppCompatActivity implements MainView, Navigat
     }
 
     /**
-     * Get MainPresenter instance creating it if needed
-     * @return
-     */
-    public MainPresenter getMainPresenter() {
-        if(mainPresenter == null) {
-            mainPresenter = new MainPresenter(this);
-        }
-        return mainPresenter;
-    }
-
-    /**
      * Launch ProfileActivity
      */
     private void showProfile() {
@@ -217,4 +213,6 @@ public class MainActivity extends AppCompatActivity implements MainView, Navigat
     private void showMessages() {
         // TODO: Implement
     }
+
+
 }

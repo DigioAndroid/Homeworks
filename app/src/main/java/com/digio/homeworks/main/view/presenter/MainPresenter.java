@@ -7,8 +7,9 @@ import com.digio.homeworks.R;
 import com.digio.homeworks.main.view.activity.MainActivity;
 import com.digio.homeworks.main.view.fragment.LessonsListFragment;
 import com.digio.homeworks.main.view.interfaces.MainView;
+import com.digio.homeworks.main.view.interfaces.Presenter;
 
-public class MainPresenter {
+public class MainPresenter implements Presenter {
 
     private MainView mainView;
 
@@ -16,9 +17,25 @@ public class MainPresenter {
         this.mainView = mainView;
     }
 
+    @Override public void create() {
+
+    }
+
+    @Override public void start() {
+
+    }
+
+    @Override public void stop() {
+
+    }
+
+    @Override public void destroy() {
+
+    }
+
     public void showList() {
         // Get fragment manager
-        FragmentManager manager = ((MainActivity)mainView).getSupportFragmentManager();
+        FragmentManager manager = ((MainActivity) mainView).getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
 
         // Create LessonsList fragment
@@ -28,5 +45,4 @@ public class MainPresenter {
         ft.replace(R.id.listContainer, llf);
         ft.commit();
     }
-
 }

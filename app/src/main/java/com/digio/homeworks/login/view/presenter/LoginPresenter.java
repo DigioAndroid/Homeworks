@@ -8,7 +8,7 @@ import android.widget.Toast;
 import com.digio.homeworks.login.view.activity.LoginActivity;
 import com.digio.homeworks.login.view.constant.ConfigurationParams;
 import com.digio.homeworks.login.view.interfaces.LoginView;
-import com.digio.homeworks.main.view.activity.MainActivity;
+import com.digio.homeworks.main.view.interfaces.Presenter;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -27,7 +27,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import static com.google.android.gms.internal.zzs.TAG;
 
-public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListener{
+public class LoginPresenter implements Presenter, GoogleApiClient.OnConnectionFailedListener {
 
     // Variables
     private LoginView loginView;
@@ -40,11 +40,30 @@ public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListene
 
     /**
      * Constructor
+     *
      * @param loginView
      */
     public LoginPresenter(LoginView loginView) {
         this.loginView = loginView;
+    }
+
+    @Override public void create() {
         initialize();
+    }
+
+    @Override public void start() {
+        // Assign AuthStateListener on activity start
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override public void stop() {
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
+    @Override public void destroy() {
+
     }
 
     /**
@@ -61,7 +80,7 @@ public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListene
         // Build a GoogleApiClient with access to the Google Sign-In API and the
         // options specified by gso.
         mGoogleApiClient = new GoogleApiClient.Builder(loginView.getContext())
-                .enableAutoManage((LoginActivity)loginView, this)
+                .enableAutoManage((LoginActivity) loginView, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
@@ -85,23 +104,8 @@ public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListene
     }
 
     /**
-     * Assign AuthStateListener on activity start
-     */
-    public void onActivityStart() {
-        mAuth.addAuthStateListener(mAuthListener);
-    }
-
-    /**
-     * Remove AuthStateListener on activity stop
-     */
-    public void onActivityStop() {
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
-    }
-
-    /**
      * Authenticate account when response is received
+     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -114,8 +118,7 @@ public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListene
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
-            }
-            else {
+            } else {
                 // Google Sign In failed, update UI appropriately
                 // ...
             }
@@ -127,7 +130,7 @@ public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListene
      */
     public void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        ((LoginActivity)loginView).startActivityForResult(signInIntent, RC_SIGN_IN);
+        ((LoginActivity) loginView).startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     /**
@@ -145,6 +148,7 @@ public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListene
 
     /**
      * Authenticate account using credentials
+     *
      * @param acct
      */
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
@@ -152,7 +156,7 @@ public class LoginPresenter implements GoogleApiClient.OnConnectionFailedListene
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener((LoginActivity)loginView, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener((LoginActivity) loginView, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
