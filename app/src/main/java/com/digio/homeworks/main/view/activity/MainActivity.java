@@ -1,11 +1,15 @@
 package com.digio.homeworks.main.view.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -13,8 +17,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.digio.homeworks.R;
-import com.digio.homeworks.login.view.presenter.LoginPresenter;
-import com.digio.homeworks.main.view.interfaces.MainView;
+import com.digio.homeworks.main.view.fragment.LessonsListFragment;
 import com.digio.homeworks.main.view.interfaces.Presenter;
 import com.digio.homeworks.main.view.presenter.MainPresenter;
 import com.digio.homeworks.profile.view.activity.ProfileActivity;
@@ -22,12 +25,11 @@ import com.digio.homeworks.profile.view.activity.ProfileActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends ParentActivity implements MainView, NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends ParentActivity implements MainPresenter.View, NavigationView.OnNavigationItemSelectedListener{
 
     private MainPresenter mainPresenter;
     @BindView(R.id.drawerLayout) DrawerLayout drawerLayout;
     @BindView(R.id.mainToolbar) Toolbar toolbar;
-    @BindView(R.id.toolbarTitle) TextView mainTitle;
     @BindView(R.id.mainNavView) NavigationView navView;
 
     @Override
@@ -39,32 +41,41 @@ public class MainActivity extends ParentActivity implements MainView, Navigation
         ButterKnife.bind(this);
 
         // Show toolbar with main title
-        mainTitle.setText(getString(R.string.main_title));
+        toolbar.setTitle(getString(R.string.main_title));
         setSupportActionBar(toolbar);
 
         //DBUtils.test();
 
         // Create fragment and add it to container
-        getPresenter().showList();
+        showList();
 
         // Set Navigation listener
         navView.setNavigationItemSelectedListener(this);
 
         // Configure NavigationDrawer options
-        Bundle bundle = getIntent().getExtras();
-        if(bundle != null) {
-            userSignIn(bundle);
-        }
-        else {
-            anonymousSignIn();
-        }
+        ((MainPresenter)getPresenter()).handleAccountInfo();
 
         // Enable hamburger menu
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         drawerToggle.syncState();
     }
 
-    @NonNull @Override public MainPresenter getPresenter() {
+    private void showList() {
+        // Get fragment manager
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction ft = manager.beginTransaction();
+
+        // Create LessonsList fragment
+        LessonsListFragment llf = new LessonsListFragment();
+
+        // Add fragment to container
+        ft.replace(R.id.listContainer, llf);
+        ft.commit();
+    }
+
+    @NonNull
+    @Override
+    public Presenter getPresenter() {
         if(mainPresenter == null) {
             mainPresenter = new MainPresenter(this);
         }
@@ -73,19 +84,20 @@ public class MainActivity extends ParentActivity implements MainView, Navigation
 
     /**
      * Configure NavigationDrawer for signed-in user
-     * @param bundle
+     * @param userName
+     * @param userEmail
      */
-    private void userSignIn(Bundle bundle) {
+    public void userSignIn(String userName, String userEmail) {
         // Get header view
         View headerView = navView.getHeaderView(0);
 
         // Get header textviews
-        TextView userName = ButterKnife.findById(headerView, R.id.navHeaderUser);
+        TextView user = ButterKnife.findById(headerView, R.id.navHeaderUser);
         TextView email = ButterKnife.findById(headerView, R.id.navHeaderEmail);
 
         // Set account information
-        userName.setText(bundle.getString("ACCOUNT_USER"));
-        email.setText(bundle.getString("ACCOUNT_EMAIL"));
+        user.setText(userName);
+        email.setText(userEmail);
 
         // Show Sign-out button and hide Sign-in button
         MenuItem btnSignOut = navView.getMenu().findItem(R.id.nav_sign_out_opt);
@@ -97,7 +109,7 @@ public class MainActivity extends ParentActivity implements MainView, Navigation
     /**
      * Configure NavigationDrawer for anonymous user
      */
-    private void anonymousSignIn() {
+    public void anonymousSignIn() {
         // Disable profile, my lessons, my students and messages buttons
         MenuItem btnProfile = navView.getMenu().findItem(R.id.nav_profile_opt);
         btnProfile.setEnabled(false);
@@ -150,8 +162,6 @@ public class MainActivity extends ParentActivity implements MainView, Navigation
     private void showProfile() {
         // TODO: Implement
         Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-        String email_extra = getIntent().getExtras().getString("ACCOUNT_EMAIL");
-        intent.putExtra("EMAIL", email_extra);
         startActivity(intent);
     }
 
@@ -215,4 +225,17 @@ public class MainActivity extends ParentActivity implements MainView, Navigation
     }
 
 
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    /**
+     * Get shared preferences
+     * @return
+     */
+    @Override
+    public SharedPreferences getSharedPreferences() {
+        return PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+    }
 }

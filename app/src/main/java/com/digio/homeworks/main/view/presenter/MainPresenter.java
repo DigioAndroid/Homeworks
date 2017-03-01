@@ -1,48 +1,62 @@
 package com.digio.homeworks.main.view.presenter;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.digio.homeworks.R;
 import com.digio.homeworks.main.view.activity.MainActivity;
 import com.digio.homeworks.main.view.fragment.LessonsListFragment;
-import com.digio.homeworks.main.view.interfaces.MainView;
 import com.digio.homeworks.main.view.interfaces.Presenter;
 
 public class MainPresenter implements Presenter {
 
-    private MainView mainView;
+    private MainPresenter.View mainView;
 
-    public MainPresenter(MainView mainView) {
+    public MainPresenter(MainPresenter.View mainView) {
         this.mainView = mainView;
     }
 
-    @Override public void create() {
+    @Override
+    public void create() {
 
     }
 
-    @Override public void start() {
+    @Override
+    public void start() {
 
     }
 
-    @Override public void stop() {
+    @Override
+    public void stop() {
 
     }
 
-    @Override public void destroy() {
+    @Override
+    public void destroy() {
 
     }
 
-    public void showList() {
-        // Get fragment manager
-        FragmentManager manager = ((MainActivity) mainView).getSupportFragmentManager();
-        FragmentTransaction ft = manager.beginTransaction();
+    public void handleAccountInfo() {
+        // Store user and email in shared preferences
+        SharedPreferences pref = mainView.getSharedPreferences();
+        String user = pref.getString("ACCOUNT_USER", null);
+        String email = pref.getString("ACCOUNT_EMAIL", null);
+        if(user != null) {
+            mainView.userSignIn(user, email);
+        }
+        else {
+            mainView.anonymousSignIn();
+        }
+    }
 
-        // Create LessonsList fragment
-        LessonsListFragment llf = new LessonsListFragment();
+    public interface View {
 
-        // Add fragment to container
-        ft.replace(R.id.listContainer, llf);
-        ft.commit();
+        Context getContext();
+        void userSignIn(String user, String email);
+        void anonymousSignIn();
+        SharedPreferences getSharedPreferences();
+
     }
 }

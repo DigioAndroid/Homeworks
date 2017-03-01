@@ -10,4 +10,57 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.digio.homeworks.profile.view.activity.ProfileActivity">
 
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/userAvatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userName"/>
+
+    <TextView
+        android:id="@+id/userRateScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userName"
+        android:layout_toRightOf="@id/userAvatar"/>
+
+    <ImageView
+        android:id="@+id/userRateImage"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/userName"
+        android:layout_toRightOf="@id/userRateScore"
+        android:src="@mipmap/star"/>
+
+    <TextView
+        android:id="@+id/userTotalRates"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userRateScore"
+        android:layout_toRightOf="@id/userAvatar"/>
+
+    <TextView
+        android:id="@+id/userNumStudents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userTotalRates"
+        android:layout_toRightOf="@id/userAvatar"/>
+
+    <Button
+        android:id="@+id/btnEditProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userName"
+        android:text="@string/edit_profile"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userNumStudents"/>
+
 </RelativeLayout>

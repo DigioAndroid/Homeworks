@@ -1,13 +1,14 @@
 package com.digio.homeworks.login.view.presenter;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.digio.homeworks.login.view.activity.LoginActivity;
 import com.digio.homeworks.login.view.constant.ConfigurationParams;
-import com.digio.homeworks.login.view.interfaces.LoginView;
 import com.digio.homeworks.main.view.interfaces.Presenter;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -30,40 +31,21 @@ import static com.google.android.gms.internal.zzs.TAG;
 public class LoginPresenter implements Presenter, GoogleApiClient.OnConnectionFailedListener {
 
     // Variables
-    private LoginView loginView;
-
-    private static final int RC_SIGN_IN = 100;
+    private LoginPresenter.View loginView;
 
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    public static final int RC_SIGN_IN = 100;
+
     /**
      * Constructor
-     *
      * @param loginView
      */
-    public LoginPresenter(LoginView loginView) {
+    public LoginPresenter(LoginPresenter.View loginView) {
         this.loginView = loginView;
-    }
-
-    @Override public void create() {
         initialize();
-    }
-
-    @Override public void start() {
-        // Assign AuthStateListener on activity start
-        mAuth.addAuthStateListener(mAuthListener);
-    }
-
-    @Override public void stop() {
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
-    }
-
-    @Override public void destroy() {
-
     }
 
     /**
@@ -80,7 +62,7 @@ public class LoginPresenter implements Presenter, GoogleApiClient.OnConnectionFa
         // Build a GoogleApiClient with access to the Google Sign-In API and the
         // options specified by gso.
         mGoogleApiClient = new GoogleApiClient.Builder(loginView.getContext())
-                .enableAutoManage((LoginActivity) loginView, this)
+                .enableAutoManage((LoginActivity)loginView, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
@@ -93,7 +75,14 @@ public class LoginPresenter implements Presenter, GoogleApiClient.OnConnectionFa
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    loginView.showMain(user);
+
+                    // Store user and email in shared preferences
+                    SharedPreferences.Editor editor = loginView.getSharedPreferences().edit();
+                    editor.putString("ACCOUNT_USER", user.getDisplayName());
+                    editor.putString("ACCOUNT_EMAIL", user.getEmail());
+                    editor.apply();
+
+                    loginView.showMain();
 
                 } else {
                     // User is signed out
@@ -103,25 +92,49 @@ public class LoginPresenter implements Presenter, GoogleApiClient.OnConnectionFa
         };
     }
 
+    @Override
+    public void create() {
+
+    }
+
+    /**
+     * Start method from presenter's lifecycle
+     */
+    @Override
+    public void start() {
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    /**
+     * Stop method from presenter's lifecycle
+     */
+    @Override
+    public void stop() {
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
+    @Override
+    public void destroy() {
+
+    }
+
+
     /**
      * Authenticate account when response is received
-     *
-     * @param requestCode
-     * @param resultCode
      * @param data
      */
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if (result.isSuccess()) {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = result.getSignInAccount();
-                firebaseAuthWithGoogle(account);
-            } else {
-                // Google Sign In failed, update UI appropriately
-                // ...
-            }
+    public void signInRequestHandle(Intent data) {
+        GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+        if (result.isSuccess()) {
+            // Google Sign In was successful, authenticate with Firebase
+            GoogleSignInAccount account = result.getSignInAccount();
+            firebaseAuthWithGoogle(account);
+        }
+        else {
+            // Google Sign In failed, update UI appropriately
+            // ...
         }
     }
 
@@ -130,7 +143,7 @@ public class LoginPresenter implements Presenter, GoogleApiClient.OnConnectionFa
      */
     public void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        ((LoginActivity) loginView).startActivityForResult(signInIntent, RC_SIGN_IN);
+        ((LoginActivity)loginView).startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     /**
@@ -148,7 +161,6 @@ public class LoginPresenter implements Presenter, GoogleApiClient.OnConnectionFa
 
     /**
      * Authenticate account using credentials
-     *
      * @param acct
      */
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
@@ -156,7 +168,7 @@ public class LoginPresenter implements Presenter, GoogleApiClient.OnConnectionFa
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener((LoginActivity) loginView, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener((LoginActivity)loginView, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
@@ -178,5 +190,13 @@ public class LoginPresenter implements Presenter, GoogleApiClient.OnConnectionFa
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
         // be available.
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
+    }
+
+    public interface View {
+
+        Context getContext();
+        void showMain();
+        SharedPreferences getSharedPreferences();
+
     }
 }

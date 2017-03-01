@@ -16,7 +16,7 @@
         style="@style/NoticeTitleStyle"/>
 
     <ImageView
-        android:id="@+id/teacherIcon"
+        android:id="@+id/teacherAvatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/noticeTitle"/>
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/noticeTitle"
-        android:layout_toRightOf="@id/teacherIcon"
+        android:layout_toRightOf="@id/teacherAvatar"
         style="@style/TeacherNameStyle"/>
 
     <TextView
@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/teacherName"
-        android:layout_toRightOf="@id/teacherIcon"/>
+        android:layout_toRightOf="@id/teacherAvatar"/>
 
     <ImageView
         android:id="@+id/rateImage"
@@ -57,7 +57,7 @@
         android:id="@+id/pricePerHour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/teacherIcon" />
+        android:layout_below="@id/teacherAvatar" />
 
     <TextView
         android:id="@+id/distanceToLocation"

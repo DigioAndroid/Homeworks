@@ -1,25 +1,14 @@
 package com.digio.homeworks.main.view.adapter;
 
-import android.content.Intent;
-import android.os.Bundle;
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.digio.homeworks.R;
-import com.digio.homeworks.main.view.activity.MainActivity;
 import com.digio.homeworks.main.view.model.Notice;
-import com.digio.homeworks.profile.view.activity.ProfileActivity;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,7 +19,7 @@ public class NoticeViewHolder extends RecyclerView.ViewHolder {
     // Instance variables
     @BindView(R.id.lyNoticeItem) RelativeLayout lyNoticeItem;
     @BindView(R.id.noticeTitle) TextView title;
-    @BindView(R.id.teacherIcon) ImageView icon;
+    @BindView(R.id.teacherAvatar) ImageView icon;
     @BindView(R.id.teacherName) TextView name;
     @BindView(R.id.teacherLocation) TextView location;
     @BindView(R.id.rateScore) TextView rate;
@@ -49,8 +38,10 @@ public class NoticeViewHolder extends RecyclerView.ViewHolder {
         name.setText(notice.getTeacherName());
         location.setText(notice.getTeacherLocation());
         rate.setText(notice.getTeacherCurrentRate() + " / " + notice.getTeacherTotalRates());
-        pricePerHour.setText("Precio por hora: " + notice.getPricePerHour() + "€/hora");
-        distanceInKm.setText("Distancia: " + notice.getDistanceInKm() + " Km");
+
+        Resources res = lyNoticeItem.getContext().getResources();
+        pricePerHour.setText(res.getString(R.string.price_per_hour, notice.getPricePerHour()));
+        distanceInKm.setText(res.getString(R.string.distance_in_km, notice.getDistanceInKm()));
     }
 
     /**
@@ -59,10 +50,7 @@ public class NoticeViewHolder extends RecyclerView.ViewHolder {
      */
     @OnClick(R.id.lyNoticeItem)
     public void onClick(View v) {
-        RecyclerView list = (RecyclerView)v.getParent();
-        Intent intent = new Intent(list.getContext(), ProfileActivity.class);
-        Bundle bundle = new Bundle();
-        //bundle.putString("NOTICE_ID", );
+        // TODO: Implement
     }
 
 }
