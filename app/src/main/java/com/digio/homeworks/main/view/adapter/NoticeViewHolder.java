@@ -1,6 +1,8 @@
 package com.digio.homeworks.main.view.adapter;
 
+import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,7 +10,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.digio.homeworks.R;
+import com.digio.homeworks.main.view.fragment.LessonsListFragment;
 import com.digio.homeworks.main.view.model.Notice;
+import com.digio.homeworks.main.view.presenter.LessonsListPresenter;
+import com.digio.homeworks.profile.view.model.Profile;
+import com.digio.homeworks.profile.view.model.Rate;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,16 +38,19 @@ public class NoticeViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, view);
     }
 
-    public void bindNotice(Notice notice) {
+    public void bindNotice(Notice notice, Profile profile, double rateScore) {
         title.setText(notice.getTitle());
         icon.setImageResource(notice.getIconID());
-        name.setText(notice.getTeacherName());
-        location.setText(notice.getTeacherLocation());
-        rate.setText(notice.getTeacherCurrentRate() + " / " + notice.getTeacherTotalRates());
+
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(lyNoticeItem.getContext().getApplicationContext());
+
+        name.setText(pref.getString("ACCOUNT_USER", "MISSING"));
+        location.setText(profile.getLocation());
 
         Resources res = lyNoticeItem.getContext().getResources();
-        pricePerHour.setText(res.getString(R.string.price_per_hour, notice.getPricePerHour()));
-        distanceInKm.setText(res.getString(R.string.distance_in_km, notice.getDistanceInKm()));
+        rate.setText(res.getString(R.string.rate_over_ten, String.valueOf(rateScore)));
+        pricePerHour.setText(res.getString(R.string.price_per_hour, String.valueOf(notice.getPricePerHour())));
+        distanceInKm.setText(res.getString(R.string.distance_in_km, String.valueOf(notice.getDistanceInKm())));
     }
 
     /**

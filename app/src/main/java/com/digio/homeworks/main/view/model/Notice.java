@@ -5,10 +5,7 @@ public class Notice {
     // Variables
     private String title;
     private int iconID;
-    private String teacherName;
-    private String teacherLocation;
-    private double teacherCurrentRate;
-    private int teacherTotalRates;
+    private String teacherEmail;
     private int pricePerHour;
     private double distanceInKm;
 
@@ -18,14 +15,10 @@ public class Notice {
     }
 
     // Constructor
-    public Notice(String title, int iconID, String teacherName, String teacherLocation,
-                  double teacherCurrentRate, int teacherTotalRates, int pricePerHour, double distanceInKm) {
+    public Notice(String title, int iconID, String teacherEmail, int pricePerHour, double distanceInKm) {
         this.title = title;
         this.iconID = iconID;
-        this.teacherName = teacherName;
-        this.teacherLocation = teacherLocation;
-        this.teacherCurrentRate = teacherCurrentRate;
-        this.teacherTotalRates = teacherTotalRates;
+        this.teacherEmail = teacherEmail;
         this.pricePerHour = pricePerHour;
         this.distanceInKm = distanceInKm;
     }
@@ -50,32 +43,8 @@ public class Notice {
      * Get teacher name
      * @return
      */
-    public String getTeacherName() {
-        return teacherName;
-    }
-
-    /**
-     * Get teacher location
-     * @return
-     */
-    public String getTeacherLocation() {
-        return teacherLocation;
-    }
-
-    /**
-     * Get teacher current rate
-     * @return
-     */
-    public double getTeacherCurrentRate() {
-        return teacherCurrentRate;
-    }
-
-    /**
-     * Get teacher total rates
-     * @return
-     */
-    public int getTeacherTotalRates() {
-        return teacherTotalRates;
+    public String getTeacherEmail() {
+        return teacherEmail;
     }
 
     /**

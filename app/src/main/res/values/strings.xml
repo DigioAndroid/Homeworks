@@ -20,8 +20,9 @@
 
     <!-- Main strings -->
     <string name="main_title">Homeworks</string>
-    <string name="price_per_hour">"Precio por hora: %d €/hora"</string>
-    <string name="distance_in_km">Distancia: %d Km</string>
+    <string name="rate_over_ten">"%s / 10"</string>
+    <string name="price_per_hour">"Precio por hora: %s €/hora"</string>
+    <string name="distance_in_km">Distancia: %s Km</string>
 
     <!-- Profile strings -->
     <string name="edit_profile">Edit Profile</string>

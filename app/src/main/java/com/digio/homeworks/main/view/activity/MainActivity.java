@@ -21,6 +21,7 @@ import com.digio.homeworks.main.view.fragment.LessonsListFragment;
 import com.digio.homeworks.main.view.interfaces.Presenter;
 import com.digio.homeworks.main.view.presenter.MainPresenter;
 import com.digio.homeworks.profile.view.activity.ProfileActivity;
+import com.digio.homeworks.utils.DBUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

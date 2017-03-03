@@ -11,16 +11,15 @@ import android.view.ViewGroup;
 
 import com.digio.homeworks.R;
 import com.digio.homeworks.main.view.adapter.NoticeViewHolder;
-import com.digio.homeworks.main.view.interfaces.LessonsListView;
 import com.digio.homeworks.main.view.model.Notice;
 import com.digio.homeworks.main.view.presenter.LessonsListPresenter;
+import com.digio.homeworks.profile.view.model.Profile;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.database.DatabaseReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class LessonsListFragment extends Fragment implements LessonsListView{
+public class LessonsListFragment extends Fragment implements LessonsListPresenter.View{
 
     @BindView(R.id.lessonsList) RecyclerView list;
     private FirebaseRecyclerAdapter lessonsListAdapter;
@@ -45,14 +44,16 @@ public class LessonsListFragment extends Fragment implements LessonsListView{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getLessonsListPresenter().onActivityCreated();
+
+        // Create database references
+        getLessonsListPresenter().setDatabaseReferences();
 
         // Initialize adapter and fill ViewHolder when required
         lessonsListAdapter = new FirebaseRecyclerAdapter<Notice, NoticeViewHolder>(
                 Notice.class, R.layout.item_notice, NoticeViewHolder.class, lessonsListPresenter.getNoticeReference()) {
             @Override
             protected void populateViewHolder(NoticeViewHolder viewHolder, Notice notice, int position) {
-                viewHolder.bindNotice(notice);
+                getLessonsListPresenter().setNoticeInfo(viewHolder, notice);
             }
         };
 
